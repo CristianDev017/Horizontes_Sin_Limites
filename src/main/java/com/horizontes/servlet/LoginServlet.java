@@ -36,7 +36,6 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("usuario", usuario);
         session.setMaxInactiveInterval(60 * 60); // 1 hora
 
-        // Responder con datos del usuario (sin password)
         Map<String, Object> datos = new HashMap<>();
         datos.put("id",     usuario.getId());
         datos.put("nombre", usuario.getNombre());
