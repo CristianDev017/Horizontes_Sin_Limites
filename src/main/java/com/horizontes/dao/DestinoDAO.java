@@ -36,6 +36,19 @@ public class DestinoDAO {
         return null;
     }
 
+    public Destino buscarPorNombre(String nombre) {
+        String sql = "SELECT * FROM destino WHERE nombre = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return mapear(rs);
+        } catch (SQLException e) {
+            System.out.println("Error buscar destino por nombre: " + e);
+        }
+        return null;
+    }
+
     public boolean insertar(Destino d) {
         String sql = "INSERT INTO destino (nombre, pais, descripcion, clima, imagen_url) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();

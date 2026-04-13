@@ -2,7 +2,7 @@
 package com.horizontes.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Reservacion {
@@ -17,6 +17,7 @@ public class Reservacion {
     private BigDecimal costoTotal;
     private String estado;
     private List<Cliente> pasajeros;
+
 
     public Reservacion() {}
 

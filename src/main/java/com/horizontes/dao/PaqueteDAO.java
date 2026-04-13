@@ -111,6 +111,19 @@ public class PaqueteDAO {
         return false;
     }
 
+    public Paquete buscarPorNombre(String nombre) {
+        String sql = "SELECT p.*, d.nombre AS destino_nombre FROM paquete p JOIN destino d ON p.destino_id = d.id WHERE p.nombre = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return mapear(rs);
+        } catch (SQLException e) {
+            System.out.println("Error buscar paquete por nombre: " + e);
+        }
+        return null;
+    }
+
     public boolean desactivar(int id) {
         String sql = "UPDATE paquete SET activo = 0 WHERE id = ?";
         try (Connection con = DBConnection.getConnection();

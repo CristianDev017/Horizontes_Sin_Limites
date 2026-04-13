@@ -106,15 +106,26 @@ public class ReservacionDAO {
     }
 
     public List<Reservacion> listarDelDia() {
+        String sqlCompletar = """
+            UPDATE reservacion SET estado = 'COMPLETADA'
+            WHERE estado = 'CONFIRMADA' AND fecha_viaje < CURDATE()
+            """;
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlCompletar)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error actualizar completadas: " + e);
+        }
+
         List<Reservacion> lista = new ArrayList<>();
         String sql = """
-                SELECT r.*, p.nombre AS paquete_nombre, u.nombre AS agente_nombre
-                FROM reservacion r
-                JOIN paquete p ON r.paquete_id = p.id
-                JOIN usuario u ON r.agente_id = u.id
-                WHERE r.fecha_creacion = CURDATE()
-                ORDER BY r.id DESC
-                """;
+            SELECT r.*, p.nombre AS paquete_nombre, u.nombre AS agente_nombre
+            FROM reservacion r
+            JOIN paquete p ON r.paquete_id = p.id
+            JOIN usuario u ON r.agente_id = u.id
+            WHERE r.fecha_creacion = CURDATE()
+            ORDER BY r.id DESC
+            """;
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 public class CancelacionDAO {
 
@@ -27,8 +28,7 @@ public class CancelacionDAO {
 
         // Calcular dias hasta el viaje
         LocalDate hoy = LocalDate.now();
-        LocalDate fechaViaje = res.getFechaViaje().toInstant()
-                .atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaViaje = ((java.sql.Date) res.getFechaViaje()).toLocalDate();
         long diasRestantes = ChronoUnit.DAYS.between(hoy, fechaViaje);
 
         // Validar minimo 7 dias
