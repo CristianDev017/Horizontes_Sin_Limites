@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        // Guardar en sesion
         HttpSession session = request.getSession(true);
         session.setAttribute("usuario", usuario);
         session.setMaxInactiveInterval(60 * 60); // 1 hora
