@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 public class CancelacionDAO {
 
@@ -49,7 +48,7 @@ public class CancelacionDAO {
         BigDecimal montoReembolso = totalPagado.multiply(porcentaje).setScale(2, RoundingMode.HALF_UP);
         BigDecimal perdidaAgencia = totalPagado.subtract(montoReembolso).setScale(2, RoundingMode.HALF_UP);
 
-        // Insertar cancelacion
+        // Cancelacion
         String sql = """
                 INSERT INTO cancelacion (reservacion_id, fecha, monto_reembolso, perdida_agencia)
                 VALUES (?, ?, ?, ?)
